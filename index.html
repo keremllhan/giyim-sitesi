@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giyim Mağazam | Estetik Koleksiyon</title>
-    </head>
+    <title>MODA DÜNYASI | Estetik Koleksiyon</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
     <header>
         <nav>
-            <h2>MODA DÜNYASI</h2>
+            <h2 class="logo">MODA DÜNYASI</h2>
             <ul>
                 <li>Ana Sayfa</li>
                 <li>Ürünler</li>
@@ -19,140 +21,68 @@
     </header>
 
     <main>
-        <section>
+        <div class="hero-icerik">
             <h1>Yeni Sezon Şıklığı</h1>
-            <p>En estetik tasarımlar burada seni bekliyor.</p>
-            <button>Alışverişe Başla</button>
-        </section>
+            <p>Tarzını yansıtan en özel tasarımlar burada seni bekliyor.</p>
+            <button onclick="window.scrollTo(0, 800)">Koleksiyonu Keşfet</button>
+        </div>
     </main>
-<section class="urunler">
-<section id="iletisim" class="iletisim-alani">
-    <div class="iletisim-kutu">
-        <h2>Bizimle İletişime Geç</h2>
-        <p>Sorularınız veya özel koleksiyon talepleriniz için bize yazın.</p>
-        
-        <form id="mesaj-formu">
-            <div class="form-grup">
-                <input type="text" placeholder="Adınız Soyadınız" required>
+
+    <section class="urunler">
+        <h2>Öne Çıkanlar</h2>
+        <div class="urun-container">
+            <div class="urun-kart">
+                <img src="https://images.unsplash.com/photo-1539109136881-3be061094eca?w=500" alt="Ceket">
+                <h3>Klasik Kesim Ceket</h3>
+                <p>1.250 TL</p>
+                <button class="sepete-ekle">Sepete Ekle</button>
             </div>
-            <div class="form-grup">
-                <input type="email" placeholder="E-posta Adresiniz" required>
+            <div class="urun-kart">
+                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" alt="Elbise">
+                <h3>Yazlık Elbise</h3>
+                <p>850 TL</p>
+                <button class="sepete-ekle">Sepete Ekle</button>
             </div>
-            <div class="form-grup">
-                <textarea placeholder="Mesajınız..." rows="5" required></textarea>
+            <div class="urun-kart">
+                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" alt="Mont">
+                <h3>Premium Mont</h3>
+                <p>2.100 TL</p>
+                <button class="sepete-ekle">Sepete Ekle</button>
             </div>
-            <button type="submit" class="gonder-btn">Mesajı Gönder</button>
+        </div>
+    </section>
+
+    <section class="hikayemiz">
+        <h2>Moda Bir Hikayedir</h2>
+        <p>Her dikişte kaliteyi, her tasarımda estetiği ön planda tutuyoruz.</p>
+    </section>
+
+    <section class="bulten">
+        <h2>Modayı Takip Edin</h2>
+        <form class="bulten-form">
+            <input type="email" placeholder="E-posta adresiniz" required>
+            <button type="submit">Kayıt Ol</button>
         </form>
-    </div>
-</section>
+    </section>
 
-
-
-
-
-
-
-
-    <h2>Öne Çıkan Koleksiyon</h2>
-    
-    <div class="urun-container">
-<section class="urunler">
-    <h2>Yeni Sezon Koleksiyonu</h2>
-    
-    <div class="kategoriler" style="margin-bottom: 30px;">
-        <button class="kat-btn">Tümü</button>
-        <button class="kat-btn">Dış Giyim</button>
-        <button class="kat-btn">Elbiseler</button>
-        <button class="kat-btn">Aksesuar</button>
-    </div>
-
-    <div class="urun-container">
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=500&q=80" alt="Şort">
-            </div>
-            <h3>Yazlık Denim Şort</h3>
-            <p>650 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=500&q=80" alt="Ayakkabı">
-            </div>
-            <h3>Stiletto Ayakkabı</h3>
-            <p>1.450 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.image.com/photo-1583743814966-8936f5b7be1a?w=500&q=80" alt="Tişört">
-            </div>
-            <h3>Basic Beyaz Tişört</h3>
-            <p>350 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-    </div>
-</section>
-
-
-
-
-
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.unsplash.com/photo-1539109136881-3be061094eca?w=500&q=80" alt="Ceket">
-            </div>
-            <h3>Klasik Kesim Ceket</h3>
-            <p>1.250 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500&q=80" alt="Elbise">
-            </div>
-            <h3>Yazlık Elbise</h3>
-            <p>850 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-
-        <div class="urun-kart">
-            <div class="urun-resim">
-                <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&q=80" alt="Mont">
-            </div>
-            <h3>Premium Mont</h3>
-            <p>2.100 TL</p>
-            <button class="sepete-ekle">Sepete Ekle</button>
-        </div>
-    </div>
-</section>
-<footer>
-    <div class="footer-icerik">
-        <div class="footer-bolum">
-            <h3>MODA DÜNYASI</h3>
-            <p>Tarzını yansıtan en özel tasarımlar.</p>
-        </div>
-        <div class="footer-bolum">
-            <h4>Hızlı Linkler</h4>
-            <ul>
-                <li>Hakkımızda</li>
-                <li>Sıkça Sorulan Sorular</li>
-                <li>Kargo Takip</li>
-            </ul>
-        </div>
-        <div class="footer-bolum">
-            <h4>Bize Ulaşın</h4>
-            <p>E-posta: info@modadunyasi.com</p>
-            <p>Telefon: +90 555 000 00 00</p>
-        </div>
-    </div>
-    <div class="footer-alt">
+    <footer>
         <p>&copy; 2025 Moda Dünyası - Tüm Hakları Saklıdır.</p>
+    </footer>
+
+    <div id="sepet-paneli" class="sepet-gizli">
+        <div class="sepet-baslik">
+            <h3>Sepetim</h3>
+            <button id="sepet-kapat">X</button>
+        </div>
+        <div id="sepet-listesi"></div>
+        <div class="sepet-alt">
+            <h4>Toplam: <span id="toplam-fiyat">0</span> TL</h4>
+            <button class="odeme-btn">Satın Al</button>
+        </div>
     </div>
-</footer>
-<script src="script.js"></script>
+
+    <a href="https://wa.me/905550000000" class="whatsapp-buton" target="_blank">WhatsApp Destek</a>
+
+    <script src="script.js"></script>
 </body>
 </html>
-<link rel="stylesheet" href="style.css">

@@ -1,29 +1,34 @@
-// Sayfa yüklendiğinde çalışacak kodlar
+let sepet = [];
+const sepetPaneli = document.getElementById('sepet-paneli');
+const sepetListesi = document.getElementById('sepet-listesi');
+const toplamFiyatElement = document.getElementById('toplam-fiyat');
+
+// Sepete Ekleme
 document.querySelectorAll('.sepete-ekle').forEach(button => {
     button.addEventListener('click', () => {
-        // Ürünün ismini alalım
-        const urunAdi = button.parentElement.querySelector('h3').innerText;
-        
-        // Şık bir uyarı mesajı gösterelim
-        alert('Harika seçim! ' + urunAdi + ' sepetine eklendi. 🛍️');
-        
-        // Butonun rengini geçici olarak değiştirelim
-        button.innerText = 'Eklendi!';
-        button.style.backgroundColor = '#2ed573';
-        
-        setTimeout(() => {
-            button.innerText = 'Sepete Ekle';
-            button.style.backgroundColor = '#333';
-        }, 2000);
+        const urunKarti = button.parentElement;
+        const ad = urunKarti.querySelector('h3').innerText;
+        const fiyat = parseInt(urunKarti.querySelector('p').innerText.replace(' TL', '').replace('.', ''));
+
+        sepet.push({ ad, fiyat });
+        sepetiGuncelle();
+        sepetPaneli.classList.add('acik');
     });
 });
-// Form gönderme işlemi
-const mesajFormu = document.getElementById('mesaj-formu');
 
-if(mesajFormu) {
-    mesajFormu.addEventListener('submit', (e) => {
-        e.preventDefault(); // Sayfanın yenilenmesini engeller
-        alert('Mesajınız başarıyla alındı dostum! En kısa sürede dönüş yapacağız. 📧');
-        mesajFormu.reset(); // Formu temizler
+// Kapatma
+document.getElementById('sepet-kapat').addEventListener('click', () => {
+    sepetPaneli.classList.remove('acik');
+});
+
+function sepetiGuncelle() {
+    sepetListesi.innerHTML = '';
+    let toplam = 0;
+    sepet.forEach((urun) => {
+        toplam += urun.fiyat;
+        const div = document.createElement('div');
+        div.innerHTML = `<p style="padding:10px; border-bottom:1px solid #eee">${urun.ad} - <b>${urun.fiyat} TL</b></p>`;
+        sepetListesi.appendChild(div);
     });
+    toplamFiyatElement.innerText = toplam.toLocaleString('tr-TR');
 }

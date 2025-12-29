@@ -20,23 +20,38 @@
 
     <div class="sayfa-container">
         <h1>Profilim</h1>
-        <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+        
+        <!-- Giriş Bölümü -->
+        <div id="login-section" style="max-width: 400px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 10px;">
+            <h3>Giriş Yap</h3>
+            <p style="margin-bottom: 15px;">Siparişlerinizi ve bilgilerinizi görmek için e-posta adresinizi girin.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>E-posta Adresiniz</label>
+                    <input type="email" id="login-email" required placeholder="ornek@email.com">
+                </div>
+                <button type="submit" style="width: 100%;">Profilimi Göster</button>
+            </form>
+        </div>
+
+        <!-- Profil Detayları (Başlangıçta Gizli) -->
+        <div id="profile-section" style="display: none; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
             <div style="flex: 1; min-width: 300px; background: #f9f9f9; padding: 30px; border-radius: 10px;">
                 <h3>Kişisel Bilgiler</h3>
                 <form>
                     <div class="form-group">
                         <label>Ad Soyad</label>
-                        <input type="text" value="Misafir Kullanıcı">
+                        <input type="text" id="profile-ad" readonly>
                     </div>
                     <div class="form-group">
                         <label>E-posta</label>
-                        <input type="email" value="misafir@ornek.com">
+                        <input type="email" id="profile-email" readonly>
                     </div>
                     <div class="form-group">
                         <label>Telefon</label>
-                        <input type="tel" value="0555 000 00 00">
+                        <input type="tel" id="profile-tel">
                     </div>
-                    <button type="button">Bilgileri Güncelle</button>
+                    <button type="button" id="update-btn">Bilgileri Güncelle</button>
                 </form>
             </div>
 
@@ -51,23 +66,92 @@
                             <th>Durum</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>#12345</td>
-                            <td>10.10.2023</td>
-                            <td>1.250 TL</td>
-                            <td>Teslim Edildi</td>
-                        </tr>
-                        <tr>
-                            <td>#12346</td>
-                            <td>15.10.2023</td>
-                            <td>850 TL</td>
-                            <td>Kargoda</td>
-                        </tr>
+                    <tbody id="siparis-tablosu">
+                        <!-- JS ile doldurulacak -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <script>
+        // Varsayılan Veriler (Eğer sistemde hiç veri yoksa)
+        const defaultUsers = {
+            'ahmet@ornek.com': {
+                ad: 'Ahmet Yılmaz',
+                tel: '0555 123 45 67',
+                siparisler: [
+                    { no: '#1001', tarih: '01.01.2024', tutar: '1.500 TL', durum: 'Teslim Edildi' }
+                ]
+            },
+            'ayse@ornek.com': {
+                ad: 'Ayşe Demir',
+                tel: '0532 987 65 43',
+                siparisler: [
+                    { no: '#2005', tarih: '10.02.2024', tutar: '850 TL', durum: 'Kargoda' },
+                    { no: '#1980', tarih: '05.01.2024', tutar: '2.100 TL', durum: 'Teslim Edildi' }
+                ]
+            }
+        };
+
+        // LocalStorage'dan verileri çek, yoksa varsayılanları yükle
+        let users = JSON.parse(localStorage.getItem('users'));
+        if (!users) {
+            users = defaultUsers;
+            localStorage.setItem('users', JSON.stringify(users));
+        }
+
+        let currentUserEmail = null;
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            currentUserEmail = email;
+            
+            // Kullanıcı yoksa yeni oluştur ve kaydet
+            if (!users[email]) {
+                users[email] = {
+                    ad: 'Yeni Kullanıcı',
+                    tel: '',
+                    siparisler: []
+                };
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            const user = users[email];
+
+            // Bilgileri Doldur
+            document.getElementById('profile-ad').value = user.ad;
+            document.getElementById('profile-email').value = email;
+            document.getElementById('profile-tel').value = user.tel;
+
+            const tbody = document.getElementById('siparis-tablosu');
+            tbody.innerHTML = '';
+            if (user.siparisler.length > 0) {
+                user.siparisler.forEach(s => {
+                    tbody.innerHTML += `<tr><td>${s.no}</td><td>${s.tarih}</td><td>${s.tutar}</td><td>${s.durum}</td></tr>`;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="4">Henüz siparişiniz bulunmuyor.</td></tr>';
+            }
+
+            // Ekranı Değiştir
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('profile-section').style.display = 'flex';
+        });
+
+        // Bilgileri Güncelleme İşlemi
+        document.getElementById('update-btn').addEventListener('click', function() {
+            if (currentUserEmail && users[currentUserEmail]) {
+                users[currentUserEmail].ad = document.getElementById('profile-ad').value;
+                users[currentUserEmail].tel = document.getElementById('profile-tel').value;
+                
+                // Güncel veriyi kaydet
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Bilgileriniz başarıyla güncellendi!');
+            }
+        });
+    </script>
+    <script src="script.js"></script>
 </body>
 </html>

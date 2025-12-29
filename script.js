@@ -79,33 +79,48 @@ document.querySelectorAll('.hizli-bakis-btn').forEach(button => {
     });
 });
 
-modalCloseBtn.addEventListener('click', () => {
-    quickViewModal.classList.remove('acik');
-    document.body.style.overflow = ''; // Restore scrolling
-});
-quickViewModal.addEventListener('click', (event) => {
-    if (event.target === quickViewModal) {
+if (modalCloseBtn) {
+    modalCloseBtn.addEventListener('click', () => {
         quickViewModal.classList.remove('acik');
-        document.body.style.overflow = '';
-    }
-});
-// Mobil Menü Açma/Kapama
-menuToggle.addEventListener('click', () => {
-    mobilMenu.classList.toggle('acik');
-});
+        document.body.style.overflow = ''; // Restore scrolling
+    });
+}
 
-document.querySelector('.menu-kapat').addEventListener('click', () => {
-    mobilMenu.classList.remove('acik');
-});
+if (quickViewModal) {
+    quickViewModal.addEventListener('click', (event) => {
+        if (event.target === quickViewModal) {
+            quickViewModal.classList.remove('acik');
+            document.body.style.overflow = '';
+        }
+    });
+}
+
+// Mobil Menü Açma/Kapama
+if (menuToggle) {
+    menuToggle.addEventListener('click', () => {
+        mobilMenu.classList.toggle('acik');
+    });
+}
+
+if (document.querySelector('.menu-kapat')) {
+    document.querySelector('.menu-kapat').addEventListener('click', () => {
+        mobilMenu.classList.remove('acik');
+    });
+}
 
 // Menüdeki linklere tıklayınca menüyü kapat
-mobilMenu.querySelectorAll('li a').forEach(link => {
-    link.addEventListener('click', () => mobilMenu.classList.remove('acik'));
-});
+if (mobilMenu) {
+    mobilMenu.querySelectorAll('li a').forEach(link => {
+        link.addEventListener('click', () => mobilMenu.classList.remove('acik'));
+    });
+}
+
 // Kapatma
-document.getElementById('sepet-kapat').addEventListener('click', () => {
-    sepetPaneli.classList.remove('acik');
-});
+if (document.getElementById('sepet-kapat')) {
+    document.getElementById('sepet-kapat').addEventListener('click', () => {
+        sepetPaneli.classList.remove('acik');
+    });
+}
 
 function sepetiGuncelle() {
     sepetListesi.innerHTML = '';
@@ -128,17 +143,21 @@ function sepetiGuncelle() {
     });
     toplamFiyatElement.innerText = toplam.toLocaleString('tr-TR');
 }
-document.querySelector('.odeme-btn').addEventListener('click', () => {
-    if (sepet.length === 0) {
-        alert("Sepetin boş dostum!");
-        return;
-    }
 
-    // Sepeti localStorage'a kaydet ki ödeme sayfasında görebilelim
-    localStorage.setItem('sepet', JSON.stringify(sepet));
-    localStorage.setItem('toplamFiyat', toplamFiyatElement.innerText);
-    window.location.href = 'odeme.html';
-});
+if (document.querySelector('.odeme-btn')) {
+    document.querySelector('.odeme-btn').addEventListener('click', () => {
+        if (sepet.length === 0) {
+            alert("Sepetin boş dostum!");
+            return;
+        }
+
+        // Sepeti localStorage'a kaydet ki ödeme sayfasında görebilelim
+        localStorage.setItem('sepet', JSON.stringify(sepet));
+        localStorage.setItem('toplamFiyat', toplamFiyatElement.innerText);
+        window.location.href = 'odeme.html';
+    });
+}
+
 // Ürün Silme Fonksiyonu
 function urunuSil(index) {
     sepet.splice(index, 1); // Diziden o sıradaki ürünü çıkar
@@ -168,3 +187,29 @@ function geriSayim() {
     }, 1000);
 }
 geriSayim(); // Sayfa yüklendiğinde geri sayımı başlat
+
+// Bülten Formu (Kayıt Ol) Entegrasyonu
+const bultenForm = document.querySelector('.bulten-form');
+if (bultenForm) {
+    bultenForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // LocalStorage'dan mevcut kullanıcıları al
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+        
+        // Eğer kullanıcı yoksa listeye ekle
+        if (!users[email]) {
+            users[email] = {
+                ad: 'Yeni Abone', // İsim bilinmiyor
+                tel: '-',
+                siparisler: []
+            };
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Kaydınız başarıyla alındı! Admin panelinde görünecektir.');
+        } else {
+            alert('Bu e-posta zaten kayıtlı.');
+        }
+        this.reset();
+    });
+}

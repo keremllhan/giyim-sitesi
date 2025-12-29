@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıtlı Kullanıcılar | Admin Paneli</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header style="background: #333;">
+        <nav>
+            <h2 class="logo" style="color: white;">KULLANICI LİSTESİ</h2>
+            <ul>
+                <li><a href="admin.html" style="color: white;">Admin Paneline Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sayfa-container">
+        <h1>Kayıtlı Kullanıcılar</h1>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>E-posta</th>
+                    <th>Ad Soyad</th>
+                    <th>Telefon</th>
+                    <th>Sipariş Adedi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- JS ile doldurulacak -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // LocalStorage'dan kullanıcıları çekip tabloya yazdır
+        const users = JSON.parse(localStorage.getItem('users')) || {};
+        const tbody = document.querySelector('#users-table tbody');
+        
+        if (Object.keys(users).length === 0) {
+            tbody.innerHTML = '<tr><td colspan="4">Henüz kayıtlı kullanıcı yok.</td></tr>';
+        } else {
+            for (const [email, user] of Object.entries(users)) {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${email}</td>
+                        <td>${user.ad}</td>
+                        <td>${user.tel}</td>
+                        <td>${user.siparisler ? user.siparisler.length : 0}</td>
+                    </tr>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

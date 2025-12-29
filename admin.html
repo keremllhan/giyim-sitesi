@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli | Moda Dünyası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header style="background: #333;">
+        <nav>
+            <h2 class="logo" style="color: white;">ADMIN PANELİ</h2>
+            <ul>
+                <li><a href="index.html" style="color: white;">Siteye Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sayfa-container">
+        <h1>Yönetim Paneli</h1>
+        
+        <div style="margin-top: 30px;">
+            <h3>Ürün Yönetimi</h3>
+            <button style="margin-bottom: 15px; background: green;">+ Yeni Ürün Ekle</button>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ürün Adı</th>
+                        <th>Kategori</th>
+                        <th>Fiyat</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Klasik Kesim Ceket</td>
+                        <td>Ceket</td>
+                        <td>1.250 TL</td>
+                        <td><button style="padding: 5px 10px; background: orange;">Düzenle</button> <button style="padding: 5px 10px; background: red;">Sil</button></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Yazlık Elbise</td>
+                        <td>Elbise</td>
+                        <td>850 TL</td>
+                        <td><button style="padding: 5px 10px; background: orange;">Düzenle</button> <button style="padding: 5px 10px; background: red;">Sil</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div style="margin-top: 50px;">
+            <h3>Gelen Siparişler</h3>
+            <p>Henüz yeni sipariş yok.</p>
+        </div>
+    </div>
+</body>
+</html>

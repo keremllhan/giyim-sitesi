@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödeme Yap | Moda Dünyası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h2 class="logo">MODA DÜNYASI</h2>
+            <ul>
+                <li><a href="index.html">Alışverişe Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sayfa-container">
+        <h1>Ödeme Sayfası</h1>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+            
+            <!-- Ödeme Formu -->
+            <div style="flex: 2; min-width: 300px;">
+                <h3>Kart Bilgileri</h3>
+                <form id="odeme-formu">
+                    <div class="form-group">
+                        <label>Kart Üzerindeki İsim</label>
+                        <input type="text" placeholder="Ad Soyad" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kart Numarası</label>
+                        <input type="text" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+                    <div style="display: flex; gap: 20px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label>Son Kullanma Tarihi</label>
+                            <input type="text" placeholder="AA/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label>CVV</label>
+                            <input type="text" placeholder="123" maxlength="3" required>
+                        </div>
+                    </div>
+                    
+                    <h3>Teslimat Adresi</h3>
+                    <div class="form-group">
+                        <label>Adres</label>
+                        <textarea rows="3" placeholder="Açık adresiniz..." required></textarea>
+                    </div>
+
+                    <button type="submit" style="width: 100%; margin-top: 20px;">Ödemeyi Tamamla</button>
+                </form>
+            </div>
+
+            <!-- Sipariş Özeti -->
+            <div style="flex: 1; min-width: 250px; background: #f9f9f9; padding: 20px; border-radius: 10px; height: fit-content;">
+                <h3>Sipariş Özeti</h3>
+                <div id="odeme-sepet-listesi" style="margin-bottom: 20px;">
+                    <!-- JS ile doldurulacak -->
+                </div>
+                <h2 style="border-top: 2px solid #ddd; padding-top: 10px;">Toplam: <span id="odeme-toplam">0</span> TL</h2>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // LocalStorage'dan sepet verisini çek
+        const sepet = JSON.parse(localStorage.getItem('sepet')) || [];
+        const toplam = localStorage.getItem('toplamFiyat') || '0';
+
+        document.getElementById('odeme-toplam').innerText = toplam;
+        const liste = document.getElementById('odeme-sepet-listesi');
+        
+        sepet.forEach(urun => {
+            liste.innerHTML += `<p style="margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;">${urun.ad} - <b>${urun.fiyat} TL</b></p>`;
+        });
+
+        document.getElementById('odeme-formu').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Ödeme başarıyla alındı! Siparişiniz hazırlanıyor.');
+            localStorage.removeItem('sepet'); // Sepeti temizle
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html>

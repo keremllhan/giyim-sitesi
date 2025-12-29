@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profilim | Moda Dünyası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <h2 class="logo">MODA DÜNYASI</h2>
+            <ul>
+                <li><a href="index.html">Ana Sayfa</a></li>
+                <li><a href="index.html#urunler-section">Ürünler</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sayfa-container">
+        <h1>Profilim</h1>
+        <div style="display: flex; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+            <div style="flex: 1; min-width: 300px; background: #f9f9f9; padding: 30px; border-radius: 10px;">
+                <h3>Kişisel Bilgiler</h3>
+                <form>
+                    <div class="form-group">
+                        <label>Ad Soyad</label>
+                        <input type="text" value="Misafir Kullanıcı">
+                    </div>
+                    <div class="form-group">
+                        <label>E-posta</label>
+                        <input type="email" value="misafir@ornek.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" value="0555 000 00 00">
+                    </div>
+                    <button type="button">Bilgileri Güncelle</button>
+                </form>
+            </div>
+
+            <div style="flex: 1; min-width: 300px;">
+                <h3>Son Siparişlerim</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sipariş No</th>
+                            <th>Tarih</th>
+                            <th>Tutar</th>
+                            <th>Durum</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#12345</td>
+                            <td>10.10.2023</td>
+                            <td>1.250 TL</td>
+                            <td>Teslim Edildi</td>
+                        </tr>
+                        <tr>
+                            <td>#12346</td>
+                            <td>15.10.2023</td>
+                            <td>850 TL</td>
+                            <td>Kargoda</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

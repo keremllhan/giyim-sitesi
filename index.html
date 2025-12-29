@@ -4,23 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MODA DÜNYASI | Estetik Koleksiyon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="indirim-bari">
+        Büyük Sezon İndirimi İçin Son: <span id="sayac">00:00:00</span>
+    </div>
+
 
     <header>
         <nav>
             <h2 class="logo">MODA DÜNYASI</h2>
-            <ul>
-                <li>Ana Sayfa</li>
-                <li>Ürünler</li>
-                <li>İletişim</li>
+            <ul id="mobil-menu" class="desktop-menu">
+                <li class="menu-kapat"><i class="fas fa-times"></i></li> <!-- Close button for mobile -->
+                <li><a href="#hero">Ana Sayfa</a></li>
+                <li><a href="#urunler-section">Ürünler</a></li>
+                <li><a href="#bulten-section">İletişim</a></li>
+                <li><a href="profile.html">Profilim</a></li>
+                <li><a href="admin.html" style="color: red;">Admin</a></li>
             </ul>
+            <div class="menu-toggle" id="menu-ac-kapa">
+                <i class="fas fa-bars"></i>
+            </div>
         </nav>
     </header>
 
-    <main>
+    <main id="hero">
         <div class="hero-icerik">
             <h1>Yeni Sezon Şıklığı</h1>
             <p>Tarzını yansıtan en özel tasarımlar burada seni bekliyor.</p>
@@ -28,36 +39,63 @@
         </div>
     </main>
 
-    <section class="urunler">
+    <section class="urunler" id="urunler-section">
         <h2>Öne Çıkanlar</h2>
+        <div class="kategori-filtreleri">
+            <button class="kategori-btn aktif" data-category="tumu">Tümü</button>
+            <button class="kategori-btn" data-category="ceket">Ceket</button>
+            <button class="kategori-btn" data-category="elbise">Elbise</button>
+            <button class="kategori-btn" data-category="mont">Mont</button>
+            <button class="kategori-btn" data-category="ayakkabi">Ayakkabı</button>
+            <button class="kategori-btn" data-category="aksesuar">Aksesuar</button>
+            <!-- Yeni ürün kategorileri eklenebilir -->
+        </div>
         <div class="urun-container">
-            <div class="urun-kart">
+            <div class="urun-kart" data-category="ceket" data-description="Bu klasik kesim ceket, şıklığı ve rahatlığı bir araya getiriyor. Her mevsim giyilebilir, gardırobunuzun vazgeçilmezi olacak.">
                 <img src="https://images.unsplash.com/photo-1539109136881-3be061094eca?w=500" alt="Ceket">
                 <h3>Klasik Kesim Ceket</h3>
                 <p>1.250 TL</p>
                 <button class="sepete-ekle">Sepete Ekle</button>
+                <button class="hizli-bakis-btn">Hızlı Bakış</button>
             </div>
-            <div class="urun-kart">
+            <div class="urun-kart" data-category="elbise" data-description="Yaz aylarının vazgeçilmezi, hafif ve nefes alabilen kumaşıyla gün boyu konfor sunar. Çiçek desenleriyle enerjinizi yansıtın.">
                 <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=500" alt="Elbise">
                 <h3>Yazlık Elbise</h3>
                 <p>850 TL</p>
                 <button class="sepete-ekle">Sepete Ekle</button>
+                <button class="hizli-bakis-btn">Hızlı Bakış</button>
             </div>
-            <div class="urun-kart">
+            <div class="urun-kart" data-category="mont" data-description="Soğuk havalara meydan okuyan premium montumuz, su geçirmez özelliği ve modern tasarımıyla sizi sıcak tutarken stilinizi tamamlar.">
                 <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" alt="Mont">
                 <h3>Premium Mont</h3>
                 <p>2.100 TL</p>
                 <button class="sepete-ekle">Sepete Ekle</button>
+                <button class="hizli-bakis-btn">Hızlı Bakış</button>
+            </div>
+            <!-- Yeni Kategoriler İçin Örnek Ürünler -->
+            <div class="urun-kart" data-category="ayakkabi" data-description="Rahat tabanlı, günlük kullanıma uygun şık spor ayakkabı.">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500" alt="Ayakkabı">
+                <h3>Spor Ayakkabı</h3>
+                <p>1.500 TL</p>
+                <button class="sepete-ekle">Sepete Ekle</button>
+                <button class="hizli-bakis-btn">Hızlı Bakış</button>
+            </div>
+            <div class="urun-kart" data-category="aksesuar" data-description="Kombininizi tamamlayacak zarif ve modern güneş gözlüğü.">
+                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=500" alt="Gözlük">
+                <h3>Güneş Gözlüğü</h3>
+                <p>450 TL</p>
+                <button class="sepete-ekle">Sepete Ekle</button>
+                <button class="hizli-bakis-btn">Hızlı Bakış</button>
             </div>
         </div>
     </section>
 
     <section class="hikayemiz">
         <h2>Moda Bir Hikayedir</h2>
-        <p>Her dikişte kaliteyi, her tasarımda estetiği ön planda tutuyoruz.</p>
+        <p>Her dikişte kaliteyi, her tasarımda estetiği ön planda tutuyoruz. Moda Dünyası, sadece giyim değil, bir yaşam tarzı sunar.</p>
     </section>
 
-    <section class="bulten">
+    <section class="bulten" id="bulten-section">
         <h2>Modayı Takip Edin</h2>
         <form class="bulten-form">
             <input type="email" placeholder="E-posta adresiniz" required>
@@ -65,11 +103,85 @@
         </form>
     </section>
 
+    <section class="musteri-yorumlari">
+        <h2>Müşterilerimiz Ne Diyor?</h2>
+        <div class="yorum-container">
+            <div class="yorum-kart">
+                <p>"Ürünlerinizin kalitesine bayıldım! Hızlı kargo ve harika müşteri hizmetleri. Kesinlikle tavsiye ederim."</p>
+                <div class="yorum-yazar">
+                    <span>Ayşe Yılmaz</span>
+                    <div class="yildizlar">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="yorum-kart">
+                <p>"Aradığım tarzı tam olarak buldum. Elbiseleriniz çok şık ve üzerime tam oturdu. Teşekkürler Moda Dünyası!"</p>
+                <div class="yorum-yazar">
+                    <span>Fatma Can</span>
+                    <div class="yildizlar">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="yorum-kart">
+                <p>"Montunuz beklediğimden çok daha iyi çıktı. Hem sıcak tutuyor hem de çok modern duruyor. Yeni favorim!"</p>
+                <div class="yorum-yazar">
+                    <span>Mehmet Demir</span>
+                    <div class="yildizlar">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer>
-        <p>&copy; 2025 Moda Dünyası - Tüm Hakları Saklıdır.</p>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Moda Dünyası</h3>
+                <p class="slogan">"Tarzını Keşfet, Kendini Yansıt."</p>
+                <p>Geliştirici: <strong>Adınız Soyadınız</strong></p>
+                <p>E-posta: info@modadunyasi.com</p>
+            </div>
+            <div class="footer-section">
+                <h3>İletişim & Adres</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Bağdat Caddesi No: 123, Kadıköy/İstanbul</p>
+                <p><a href="https://instagram.com/kullaniciadiniz" target="_blank" style="color: white;"><i class="fab fa-instagram"></i> @modadunyasi</a></p>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 Moda Dünyası - Tüm Hakları Saklıdır.</p>
     </footer>
 
-    <div id="sepet-paneli" class="sepet-gizli">
+    <!-- Quick View Modal -->
+    <div id="quick-view-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-body">
+                <img id="modal-urun-resim" src="" alt="Ürün Resmi">
+                <div class="modal-details">
+                    <h3 id="modal-urun-ad"></h3>
+                    <p id="modal-urun-fiyat"></p>
+                    <p id="modal-urun-aciklama"></p>
+                    <button class="sepete-ekle" id="modal-sepete-ekle-btn">Sepete Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sepet-paneli">
         <div class="sepet-baslik">
             <h3>Sepetim</h3>
             <button id="sepet-kapat">X</button>
@@ -81,7 +193,7 @@
         </div>
     </div>
 
-    <a href="https://wa.me/905550000000" class="whatsapp-buton" target="_blank">WhatsApp Destek</a>
+    <a href="https://wa.me/905541557781?text=Merhaba,%20sitenizdeki%20%C3%BCr%C3%BCnler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="whatsapp-buton" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Destek</a>
 
     <script src="script.js"></script>
 </body>

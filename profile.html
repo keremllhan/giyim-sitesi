@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.png" type="image/png">
     <title>Profilim | Moda Dünyası</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -10,7 +11,7 @@
 <body>
     <header>
         <nav>
-            <h2 class="logo">MODA DÜNYASI</h2>
+            <h2 class="logo"><img src="images/logo.png" alt="Moda Dünyası Logo"> MODA DÜNYASI</h2>
             <ul>
                 <li><a href="index.html">Ana Sayfa</a></li>
                 <li><a href="index.html#urunler-section">Ürünler</a></li>
@@ -21,7 +22,7 @@
     <div class="sayfa-container">
         <h1>Profilim</h1>
         
-        <!-- Giriş Bölümü -->
+        <!-- Giriş Bölümü (Başlangıçta görünür, giriş yapılınca gizlenir) -->
         <div id="login-section" style="max-width: 400px; margin: 0 auto; background: #f9f9f9; padding: 30px; border-radius: 10px;">
             <h3>Giriş Yap</h3>
             <p style="margin-bottom: 15px;">Siparişlerinizi ve bilgilerinizi görmek için e-posta adresinizi girin.</p>
@@ -34,10 +35,26 @@
             </form>
         </div>
 
-        <!-- Profil Detayları (Başlangıçta Gizli) -->
-        <div id="profile-section" style="display: none; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
-            <div style="flex: 1; min-width: 300px; background: #f9f9f9; padding: 30px; border-radius: 10px;">
-                <h3>Kişisel Bilgiler</h3>
+        <!-- Profil Paneli (Giriş yapılınca görünür) -->
+        <div id="profile-section" class="profile-dashboard" style="display: none;">
+            
+            <!-- Sol Menü -->
+            <div class="profile-sidebar">
+                <ul class="profile-menu">
+                    <li><button class="tab-btn active" onclick="openTab('bilgiler')"><i class="fas fa-user"></i> Profil Bilgileri</button></li>
+                    <li><button class="tab-btn" onclick="openTab('siparisler')"><i class="fas fa-box"></i> Siparişlerim</button></li>
+                    <li><button class="tab-btn" onclick="openTab('sepetim')"><i class="fas fa-shopping-cart"></i> Sepetim</button></li>
+                    <li><button class="tab-btn" onclick="openTab('favoriler')"><i class="fas fa-heart"></i> Favorilerim</button></li>
+                    <li><button onclick="cikisYap()" style="color: red; border-color: red;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button></li>
+                </ul>
+            </div>
+
+            <!-- İçerik Alanı -->
+            <div class="profile-content-area">
+                
+                <!-- Sekme 1: Profil Bilgileri -->
+                <div id="bilgiler" class="profile-tab active">
+                    <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Kişisel Bilgiler</h3>
                 <form>
                     <div class="form-group">
                         <label>Ad Soyad</label>
@@ -53,10 +70,16 @@
                     </div>
                     <button type="button" id="update-btn">Bilgileri Güncelle</button>
                 </form>
+                    
+                <div id="admin-panel-link-container" style="margin-top: 20px; text-align: center; display: none;">
+                    <p style="margin-bottom: 10px; font-weight: 600; color: green;">Admin olarak giriş yaptınız!</p>
+                    <a href="admin.html" class="button" style="background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">Admin Paneline Git</a>
+                </div>
             </div>
 
-            <div style="flex: 1; min-width: 300px;">
-                <h3>Son Siparişlerim</h3>
+                <!-- Sekme 2: Siparişlerim -->
+                <div id="siparisler" class="profile-tab">
+                    <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Sipariş Geçmişi</h3>
                 <table>
                     <thead>
                         <tr>
@@ -71,10 +94,28 @@
                     </tbody>
                 </table>
             </div>
+
+                <!-- Sekme 3: Sepetim -->
+                <div id="sepetim" class="profile-tab">
+                    <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Sepetimdeki Ürünler</h3>
+                    <div id="profil-sepet-listesi">
+                        <!-- JS ile doldurulacak -->
+                    </div>
+                </div>
+
+                <!-- Sekme 4: Favorilerim -->
+                <div id="favoriler" class="profile-tab">
+                    <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Favori Ürünlerim</h3>
+                    <p>Henüz favorilere eklenmiş bir ürününüz yok.</p>
+                </div>
+
+            </div>
         </div>
     </div>
 
     <script>
+        const ADMIN_EMAIL = 'kerem62004@outlook.com'; // Admin e-posta adresinizi buraya yazın
+
         // Varsayılan Veriler (Eğer sistemde hiç veri yoksa)
         const defaultUsers = {
             'ahmet@ornek.com': {
@@ -103,11 +144,24 @@
 
         let currentUserEmail = null;
 
+        // Sayfa Yüklendiğinde Oturum Kontrolü
+        window.onload = function() {
+            const loggedInEmail = localStorage.getItem('loggedInUserEmail');
+            if (loggedInEmail) {
+                girisYap(loggedInEmail);
+            }
+        };
+
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
+            girisYap(email);
+        });
+
+        function girisYap(email) {
             currentUserEmail = email;
-            
+            localStorage.setItem('loggedInUserEmail', email); // Oturumu kaydet
+
             // Kullanıcı yoksa yeni oluştur ve kaydet
             if (!users[email]) {
                 users[email] = {
@@ -116,6 +170,18 @@
                     siparisler: []
                 };
                 localStorage.setItem('users', JSON.stringify(users));
+            }
+
+            const adminPanelLinkContainer = document.getElementById('admin-panel-link-container');
+            // Admin kontrolü
+            if (email === ADMIN_EMAIL) {
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                sessionStorage.setItem('adminEmail', ADMIN_EMAIL);
+                adminPanelLinkContainer.style.display = 'block'; // Admin butonunu göster
+            } else {
+                adminPanelLinkContainer.style.display = 'none'; // Admin butonunu gizle
+                sessionStorage.removeItem('isAdminLoggedIn'); // Admin değilse oturumu temizle
+                sessionStorage.removeItem('adminEmail');
             }
             
             const user = users[email];
@@ -135,10 +201,51 @@
                 tbody.innerHTML = '<tr><td colspan="4">Henüz siparişiniz bulunmuyor.</td></tr>';
             }
 
+            // Sepeti Profilde Göster
+            const profilSepetListesi = document.getElementById('profil-sepet-listesi');
+            const mevcutSepet = JSON.parse(localStorage.getItem('sepet')) || [];
+            profilSepetListesi.innerHTML = '';
+            if (mevcutSepet.length > 0) {
+                mevcutSepet.forEach(urun => {
+                    profilSepetListesi.innerHTML += `
+                        <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
+                            <span>${urun.ad}</span>
+                            <strong>${urun.fiyat} TL</strong>
+                        </div>`;
+                });
+            } else {
+                profilSepetListesi.innerHTML = '<p>Sepetinizde ürün bulunmamaktadır.</p>';
+            }
+
             // Ekranı Değiştir
             document.getElementById('login-section').style.display = 'none';
             document.getElementById('profile-section').style.display = 'flex';
-        });
+        }
+
+        // Çıkış Yapma Fonksiyonu
+        function cikisYap() {
+            localStorage.removeItem('loggedInUserEmail'); // Oturumu sil
+            sessionStorage.removeItem('isAdminLoggedIn');
+            sessionStorage.removeItem('adminEmail');
+            window.location.reload(); // Sayfayı yenile
+        }
+
+        // Sekme Değiştirme Fonksiyonu
+        function openTab(tabName) {
+            // Tüm içerikleri gizle
+            const tabs = document.getElementsByClassName('profile-tab');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            // Tüm butonların aktifliğini kaldır
+            const btns = document.getElementsByClassName('tab-btn');
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove('active');
+            }
+            // Seçileni göster
+            document.getElementById(tabName).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
 
         // Bilgileri Güncelleme İşlemi
         document.getElementById('update-btn').addEventListener('click', function() {

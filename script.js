@@ -1,4 +1,4 @@
-let sepet = [];
+let sepet = JSON.parse(localStorage.getItem('sepet')) || [];
 const sepetPaneli = document.getElementById('sepet-paneli');
 const sepetListesi = document.getElementById('sepet-listesi');
 const toplamFiyatElement = document.getElementById('toplam-fiyat');
@@ -123,6 +123,10 @@ if (document.getElementById('sepet-kapat')) {
 }
 
 function sepetiGuncelle() {
+    localStorage.setItem('sepet', JSON.stringify(sepet)); // Sepeti her güncellemede kaydet
+
+    if (!sepetListesi || !toplamFiyatElement) return; // Eğer bu elementler sayfada yoksa (örn: profil sayfası) hata verme
+
     sepetListesi.innerHTML = '';
     let toplam = 0;
     sepet.forEach((urun, index) => { // index'i de alıyoruz
@@ -143,6 +147,8 @@ function sepetiGuncelle() {
     });
     toplamFiyatElement.innerText = toplam.toLocaleString('tr-TR');
 }
+// Sayfa yüklendiğinde sepeti güncelle (Sepet paneli varsa)
+sepetiGuncelle();
 
 if (document.querySelector('.odeme-btn')) {
     document.querySelector('.odeme-btn').addEventListener('click', () => {

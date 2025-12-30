@@ -14,12 +14,35 @@ header {
     border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000;
 }
 nav { display: flex; justify-content: space-between; align-items: center; }
-nav ul {
+nav ul { /* Desktop menu */
     display: flex;
     list-style: none;
-    gap: 20px; } /* Desktop menu */
+    gap: 20px;
+}
 nav ul li a { text-decoration: none; color: var(--ana-renk); font-weight: 600; transition: color 0.3s; }
 nav ul li a:hover { color: var(--vurgu-rengi); }
+
+/* Logo Görseli ve Metin Stilleri */
+.logo {
+    display: flex; /* Görsel ve metni yan yana hizala */
+    align-items: center; /* Dikeyde ortala */
+    font-size: 1.5rem; /* Logo metninin boyutu */
+    color: var(--ana-renk); /* Logo metninin rengi */
+    font-weight: 700; /* Kalınlık */
+}
+.logo img {
+    height: 30px; /* Görselin yüksekliği, metinle uyumlu */
+    vertical-align: middle; /* Metinle dikey hizalama */
+    margin-right: 10px; /* Metinle arasında boşluk */
+}
+.admin-logo-img {
+    height: 25px; /* Admin paneli logosu için biraz daha küçük */
+}
+
+/* Admin paneli logoları için özel renk */
+header[style*="background: #333;"] .logo {
+    color: white;
+}
 
 
 /* Hero */
@@ -596,3 +619,56 @@ footer {
 table { width: 100%; border-collapse: collapse; margin-top: 20px; }
 th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
 th { background-color: #f4f4f4; }
+
+/* Profil Sayfası Düzeni */
+.profile-dashboard {
+    display: flex;
+    gap: 30px;
+    margin-top: 30px;
+    align-items: flex-start;
+}
+.profile-sidebar {
+    flex: 1;
+    min-width: 250px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    height: fit-content;
+}
+.profile-menu {
+    list-style: none;
+}
+.profile-menu li {
+    margin-bottom: 10px;
+}
+.profile-menu li button {
+    width: 100%;
+    text-align: left;
+    background: white;
+    color: var(--ana-renk);
+    border: 1px solid #eee;
+    padding: 12px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+.profile-menu li button:hover, .profile-menu li button.active {
+    background: var(--vurgu-rengi);
+    color: white;
+    border-color: var(--vurgu-rengi);
+}
+.profile-content-area {
+    flex: 3;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    min-height: 400px;
+}
+.profile-tab {
+    display: none;
+}
+.profile-tab.active {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+}

@@ -3,14 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/admin-logo.png" type="image/png">
     <title>Kayıtlı Kullanıcılar | Admin Paneli</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+<script>
+    // Admin kontrolü
+    const ADMIN_EMAIL = 'kerem62004@outlook.com'; // admin-login.html ile aynı olmalı
+    if (sessionStorage.getItem('isAdminLoggedIn') !== 'true' || sessionStorage.getItem('adminEmail') !== ADMIN_EMAIL) {
+        alert('Admin paneline erişim izniniz yok. Lütfen giriş yapın.');
+        window.location.href = 'admin-login.html';
+    }
+</script>
 <body>
     <header style="background: #333;">
         <nav>
-            <h2 class="logo" style="color: white;">KULLANICI LİSTESİ</h2>
+            <h2 class="logo"><img src="images/admin-logo.png" alt="Admin Logo" class="admin-logo-img"> KULLANICI LİSTESİ</h2>
             <ul>
                 <li><a href="admin.html" style="color: white;">Admin Paneline Dön</a></li>
             </ul>

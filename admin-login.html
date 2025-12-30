@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/admin-logo.png" type="image/png">
+    <title>Admin Girişi | Moda Dünyası</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header style="background: #333;">
+        <nav>
+            <h2 class="logo"><img src="images/admin-logo.png" alt="Admin Logo" class="admin-logo-img"> ADMİN GİRİŞİ</h2>
+            <ul>
+                <li><a href="index.html" style="color: white;">Siteye Dön</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="sayfa-container" style="display: flex; justify-content: center; align-items: center; min-height: calc(100vh - 100px);">
+        <div style="max-width: 400px; width: 100%; background: #f9f9f9; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+            <h3>Admin Paneline Giriş</h3>
+            <p style="margin-bottom: 20px;">Lütfen admin e-posta adresinizi girin.</p>
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-email">E-posta Adresi</label>
+                    <input type="email" id="admin-email" required placeholder="admin@modadunyasi.com">
+                </div>
+                <button type="submit" style="width: 100%; margin-top: 20px;">Giriş Yap</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_EMAIL = 'kerem62004@outlook.com'; // Buraya kendi admin e-postanızı yazın
+
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const enteredEmail = document.getElementById('admin-email').value;
+
+            if (enteredEmail === ADMIN_EMAIL) {
+                sessionStorage.setItem('isAdminLoggedIn', 'true');
+                sessionStorage.setItem('adminEmail', ADMIN_EMAIL);
+                window.location.href = 'admin.html'; // Başarılı giriş sonrası admin paneline yönlendir
+            } else {
+                alert('Hatalı admin e-posta adresi!');
+            }
+        });
+    </script>
+</body>
+</html>

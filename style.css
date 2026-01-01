@@ -672,3 +672,45 @@ th { background-color: #f4f4f4; }
     display: block;
     animation: fadeIn 0.3s ease-out;
 }
+
+/* Profil Sepet ve Favori Öğeleri */
+.profil-sepet-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    background: #fff;
+    transition: background 0.3s;
+}
+.profil-sepet-item:hover {
+    background: #fcfcfc;
+}
+.profil-sepet-img {
+    width: 70px;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.profil-sepet-info {
+    flex: 1;
+}
+.profil-sepet-info h4 {
+    margin-bottom: 5px;
+    color: var(--ana-renk);
+}
+.profil-sepet-remove {
+    background: none;
+    border: none;
+    color: #e74c3c;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: transform 0.2s;
+}
+.profil-sepet-remove:hover {
+    transform: scale(1.2);
+    color: #c0392b;
+    background: none; /* Genel button hover stilini ezmek için */
+}

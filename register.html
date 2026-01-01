@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Ol | MODA DÜNYASI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #f9f9f9; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .register-container { background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #333; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #555; }
+        input { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #d4af37; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+        button:hover { background-color: #b39028; }
+        .login-link { text-align: center; margin-top: 15px; font-size: 14px; }
+        .login-link a { color: #333; text-decoration: none; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Aramıza Katıl</h2>
+        <form id="register-form">
+            <div class="form-group">
+                <label>Ad Soyad</label>
+                <input type="text" id="reg-ad" required>
+            </div>
+            <div class="form-group">
+                <label>E-posta Adresi</label>
+                <input type="email" id="reg-email" required>
+            </div>
+            <div class="form-group">
+                <label>Şifre Belirle</label>
+                <input type="password" id="reg-password" required minlength="6" placeholder="En az 6 karakter">
+            </div>
+            <button type="submit">Kayıt Ol</button>
+        </form>
+        <div class="login-link">
+            Zaten hesabın var mı? <a href="index.html" onclick="localStorage.setItem('openProfile', 'true')">Giriş Yap</a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const ad = document.getElementById('reg-ad').value;
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+
+            // Mevcut kullanıcıları al
+            let users = JSON.parse(localStorage.getItem('users')) || {};
+
+            // E-posta kontrolü
+            if (users[email]) {
+                alert('Bu e-posta adresi zaten kayıtlı!');
+                return;
+            }
+
+            // Yeni kullanıcıyı kaydet
+            users[email] = {
+                ad: ad,
+                sifre: password, // Şifreyi kaydediyoruz
+                tel: '',
+                siparisler: []
+            };
+
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Otomatik giriş yap
+            localStorage.setItem('loggedInUserEmail', email);
+
+            alert('Kayıt başarılı! Ana sayfaya yönlendiriliyorsunuz.');
+            
+            // Profil panelini açık tutmak için işaret bırak
+            localStorage.setItem('openProfile', 'true');
+            
+            window.location.href = 'index.html';
+        });
+    </script>
+
+</body>
+</html>

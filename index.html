@@ -8,6 +8,67 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Yumuşak Kaydırma Efekti */
+        html { scroll-behavior: smooth; }
+
+        /* Navigasyon Düzenlemeleri */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        nav .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            margin: 0;
+            padding: 0;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        nav ul li a:hover {
+            color: #d35400;
+        }
+        
+        /* Checkout Modal */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
+        .checkout-modal-content { background: white; padding: 30px; border-radius: 8px; width: 90%; max-width: 400px; text-align: center; position: relative; }
+        .checkout-options { display: flex; flex-direction: column; gap: 15px; margin-top: 20px; }
+        .checkout-btn { padding: 12px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; text-decoration: none; color: white; display: block; }
+        .btn-guest { background-color: #95a5a6; }
+        .btn-register { background-color: #e67e22; }
+        .close-checkout { position: absolute; top: 10px; right: 15px; font-size: 20px; cursor: pointer; background: none; border: none; }
+
+        /* Profil Paneli Stilleri */
+        #profil-paneli { position: fixed; top: 0; right: -400px; width: 350px; height: 100%; background: white; z-index: 3001; padding: 20px; transition: 0.4s; box-shadow: -5px 0 15px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 20px; }
+        #profil-paneli.acik { right: 0; }
+        .profil-baslik { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #d4af37; padding-bottom: 10px; margin-bottom: 10px; }
+        #profil-kapat { background: none; color: #333; font-size: 1.5rem; font-weight: bold; cursor: pointer; border: none; }
+        .profil-icerik h4 { margin-bottom: 10px; color: #333; }
+        .profil-mesaj { color: red; font-size: 13px; margin-bottom: 10px; display: none; }
+        .profil-form-group { margin-bottom: 15px; }
+        .profil-form-group label { display: block; margin-bottom: 5px; font-size: 14px; color: #666; }
+        .profil-form-group input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+        .profil-btn { width: 100%; padding: 10px; background-color: #333; color: white; border: none; border-radius: 4px; cursor: pointer; transition: background 0.3s; }
+        .profil-btn:hover { background-color: #d4af37; }
+        .bulten-sidebar { background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px; border: 1px solid #eee; }
+    </style>
 </head>
 <body>
     <div class="indirim-bari">
@@ -17,13 +78,15 @@
 
     <header>
         <nav>
-            <h2 class="logo">MODA DÜNYASI</h2>
-            <h2 class="logo"><img src="images/logo.png" alt="Moda Dünyası Logo"> MODA DÜNYASI</h2>
+            <h2 class="logo">
+                <a href="index.html" title="Ana Sayfaya Dön" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;"><img src="images/logo.png" alt="Moda Dünyası Logo"> MODA DÜNYASI</a>
+            </h2>
+            <ul>
                 <li class="menu-kapat"><i class="fas fa-times"></i></li> <!-- Close button for mobile -->
                 <li><a href="#hero">Ana Sayfa</a></li>
                 <li><a href="#urunler-section">Ürünler</a></li>
-                <li><a href="#bulten-section">İletişim</a></li>
-                <li><a href="profile.html">Profilim</a></li>
+                <li><a href="#footer-iletisim">İletişim</a></li>
+                <li><a href="javascript:void(0)" onclick="toggleProfilePanel()">Profilim</a></li>
             </ul>
             <div class="menu-toggle" id="menu-ac-kapa">
                 <i class="fas fa-bars"></i>
@@ -95,14 +158,6 @@
         <p>Her dikişte kaliteyi, her tasarımda estetiği ön planda tutuyoruz. Moda Dünyası, sadece giyim değil, bir yaşam tarzı sunar.</p>
     </section>
 
-    <section class="bulten" id="bulten-section">
-        <h2>Modayı Takip Edin</h2>
-        <form class="bulten-form">
-            <input type="email" placeholder="E-posta adresiniz" required>
-            <button type="submit">Kayıt Ol</button>
-        </form>
-    </section>
-
     <section class="musteri-yorumlari">
         <h2>Müşterilerimiz Ne Diyor?</h2>
         <div class="yorum-container">
@@ -148,7 +203,7 @@
         </div>
     </section>
 
-    <footer>
+    <footer id="footer-iletisim">
         <div class="footer-content">
             <div class="footer-section">
                 <h3>Moda Dünyası</h3>
@@ -189,12 +244,156 @@
         <div id="sepet-listesi"></div>
         <div class="sepet-alt">
             <h4>Toplam: <span id="toplam-fiyat">0</span> TL</h4>
-            <button class="odeme-btn">Satın Al</button>
+            <button class="odeme-btn" onclick="document.getElementById('checkout-choice-modal').style.display='flex'">Satın Al</button>
+        </div>
+    </div>
+
+    <!-- Profil Paneli -->
+    <div id="profil-paneli">
+        <div class="profil-baslik">
+            <h3>Profilim</h3>
+            <button id="profil-kapat" onclick="toggleProfilePanel()">X</button>
+        </div>
+        <div class="profil-icerik">
+            <!-- Giriş Yapılmamış Görünüm -->
+            <div id="panel-giris-formu">
+                <p class="profil-mesaj" id="login-error-msg">Geçersiz e-posta veya şifre!</p>
+                <div class="profil-form-group">
+                    <label>E-posta</label>
+                    <input type="email" id="sidebar-email" placeholder="ornek@email.com">
+                </div>
+                <div class="profil-form-group">
+                    <label>Şifre</label>
+                    <input type="password" id="sidebar-password" placeholder="******">
+                </div>
+                <div style="text-align: right; margin-bottom: 10px;">
+                    <a href="#" onclick="alert('Şifre sıfırlama bağlantısı e-posta adresinize gönderildi.'); return false;" style="font-size: 12px; color: #555; text-decoration: none;">Şifremi Unuttum</a>
+                </div>
+                <button class="profil-btn" onclick="sidebarLogin()">Giriş Yap</button>
+                <p style="text-align: center; margin-top: 15px; font-size: 14px;">
+                    Hesabın yok mu? <a href="register.html" style="color: #d4af37; font-weight: bold;">Kayıt Ol</a>
+                </p>
+            </div>
+
+            <!-- Giriş Yapılmış Görünüm -->
+            <div id="panel-kullanici-bilgi" style="display: none;">
+                <h4 id="sidebar-welcome-msg">Hoşgeldiniz, Kullanıcı</h4>
+                <button class="profil-btn" onclick="window.location.href='profile.html'" style="margin-bottom: 10px; background-color: #333;">Profilime Git</button>
+                <button class="profil-btn" id="sidebar-admin-btn" onclick="window.location.href='admin.html'" style="margin-bottom: 10px; background-color: green; display: none;">Admin Paneli</button>
+                <button class="profil-btn" onclick="sidebarLogout()" style="background-color: #c0392b;">Çıkış Yap</button>
+            </div>
+            
+            <div class="bulten-sidebar">
+                <h4>Modayı Takip Edin</h4>
+                <p style="font-size: 12px; margin-bottom: 10px;">En yeni trendlerden haberdar olmak için e-posta adresinizi bırakın.</p>
+                <div class="profil-form-group">
+                    <input type="email" placeholder="E-posta adresiniz">
+                </div>
+                <button class="profil-btn" style="background-color: #e67e22;">Bültene Kayıt Ol</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Choice Modal -->
+    <div id="checkout-choice-modal" class="modal-overlay">
+        <div class="checkout-modal-content">
+            <button class="close-checkout" onclick="document.getElementById('checkout-choice-modal').style.display='none'">&times;</button>
+            <h3>Nasıl Devam Etmek İstersiniz?</h3>
+            <div class="checkout-options">
+                <a href="guest-checkout.html" class="checkout-btn btn-guest">Hesap Açmadan Devam Et</a>
+                <a href="register-checkout.html" class="checkout-btn btn-register">Hesap Aç ve İndirimlerden Yararlan</a>
+            </div>
         </div>
     </div>
 
     <a href="https://wa.me/905541557781?text=Merhaba,%20sitenizdeki%20%C3%BCr%C3%BCnler%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="whatsapp-buton" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp Destek</a>
 
     <script src="script.js"></script>
+    <script>
+        function toggleProfilePanel() {
+            const panel = document.getElementById('profil-paneli');
+            panel.classList.toggle('acik');
+        }
+
+        // Admin Bilgileri (Demo için sabit)
+        const ADMIN_EMAIL = 'kerem62004@outlook.com';
+        // Varsayılan kullanıcı veritabanı (Eğer boşsa)
+        const defaultUsers = {
+            'kerem62004@outlook.com': { ad: 'Admin Kerem', sifre: 'admin123', tel: '', siparisler: [] }, // Admin şifresi: admin123
+            'musteri@ornek.com': { ad: 'Mehmet Demir', sifre: '123456', tel: '', siparisler: [] }
+        };
+
+        // Sayfa Yüklendiğinde Kontrol
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mevcut verileri al
+            let users = JSON.parse(localStorage.getItem('users')) || {};
+
+            // Admin hesabını kontrol et ve şifresini güncelle (veya hesabı oluştur)
+            if (!users[ADMIN_EMAIL]) {
+                users[ADMIN_EMAIL] = defaultUsers[ADMIN_EMAIL];
+            }
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Kayıt sayfasından gelindiyse paneli aç
+            if (localStorage.getItem('openProfile') === 'true') {
+                toggleProfilePanel();
+                localStorage.removeItem('openProfile');
+            }
+
+            checkLoginState();
+        });
+
+        function checkLoginState() {
+            const loggedInEmail = localStorage.getItem('loggedInUserEmail');
+            const users = JSON.parse(localStorage.getItem('users'));
+
+            if (loggedInEmail && users && users[loggedInEmail]) {
+                // Kullanıcı giriş yapmış
+                document.getElementById('panel-giris-formu').style.display = 'none';
+                document.getElementById('panel-kullanici-bilgi').style.display = 'block';
+                document.getElementById('sidebar-welcome-msg').innerText = `Hoşgeldiniz, ${users[loggedInEmail].ad}`;
+                
+                // Admin butonu kontrolü
+                if (loggedInEmail === ADMIN_EMAIL) {
+                    document.getElementById('sidebar-admin-btn').style.display = 'block';
+                }
+            } else {
+                // Giriş yapılmamış
+                document.getElementById('panel-giris-formu').style.display = 'block';
+                document.getElementById('panel-kullanici-bilgi').style.display = 'none';
+            }
+        }
+
+        function sidebarLogin() {
+            const email = document.getElementById('sidebar-email').value;
+            const password = document.getElementById('sidebar-password').value;
+            const users = JSON.parse(localStorage.getItem('users')) || defaultUsers;
+            const errorMsg = document.getElementById('login-error-msg');
+
+            if (users[email] && users[email].sifre === password) {
+                // Giriş Başarılı
+                localStorage.setItem('loggedInUserEmail', email);
+                errorMsg.style.display = 'none';
+                
+                // Eğer Admin ise direkt yönlendir (İsteğe bağlı, yoksa panelde buton çıkar)
+                if (email === ADMIN_EMAIL) {
+                    if(confirm("Admin girişi tespit edildi. Admin paneline gitmek ister misiniz?")) {
+                        window.location.href = 'admin.html';
+                        return;
+                    }
+                }
+                checkLoginState();
+            } else {
+                // Hatalı Giriş
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function sidebarLogout() {
+            localStorage.removeItem('loggedInUserEmail');
+            sessionStorage.clear();
+            window.location.reload();
+        }
+    </script>
 </body>
 </html>

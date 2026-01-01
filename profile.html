@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="images/logo.png" type="image/png">
     <title>Profilim | Moda Dünyası</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <nav>
-            <h2 class="logo"><img src="images/logo.png" alt="Moda Dünyası Logo"> MODA DÜNYASI</h2>
+            <h2 class="logo">
+                <a href="index.html" title="Ana Sayfaya Dön" style="text-decoration: none; color: inherit; display: flex; align-items: center;"><img src="images/logo.png" alt="Moda Dünyası Logo"> MODA DÜNYASI</a>
+            </h2>
             <ul>
                 <li><a href="index.html">Ana Sayfa</a></li>
                 <li><a href="index.html#urunler-section">Ürünler</a></li>
@@ -45,6 +48,7 @@
                     <li><button class="tab-btn" onclick="openTab('siparisler')"><i class="fas fa-box"></i> Siparişlerim</button></li>
                     <li><button class="tab-btn" onclick="openTab('sepetim')"><i class="fas fa-shopping-cart"></i> Sepetim</button></li>
                     <li><button class="tab-btn" onclick="openTab('favoriler')"><i class="fas fa-heart"></i> Favorilerim</button></li>
+                    <li><button class="tab-btn" onclick="openTab('sifre')"><i class="fas fa-key"></i> Şifre Değiştir</button></li>
                     <li><button onclick="cikisYap()" style="color: red; border-color: red;"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</button></li>
                 </ul>
             </div>
@@ -106,7 +110,27 @@
                 <!-- Sekme 4: Favorilerim -->
                 <div id="favoriler" class="profile-tab">
                     <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Favori Ürünlerim</h3>
-                    <p>Henüz favorilere eklenmiş bir ürününüz yok.</p>
+                    <div id="profil-favori-listesi"><p>Henüz favorilere eklenmiş bir ürününüz yok.</p></div>
+                </div>
+
+                <!-- Sekme 5: Şifre Değiştir -->
+                <div id="sifre" class="profile-tab">
+                    <h3 style="margin-bottom: 20px; color: var(--vurgu-rengi);">Şifre Değiştir</h3>
+                    <form id="password-change-form">
+                        <div class="form-group">
+                            <label>Mevcut Şifre</label>
+                            <input type="password" id="current-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Yeni Şifre</label>
+                            <input type="password" id="new-password" required minlength="6">
+                        </div>
+                        <div class="form-group">
+                            <label>Yeni Şifre (Tekrar)</label>
+                            <input type="password" id="confirm-password" required minlength="6">
+                        </div>
+                        <button type="submit">Şifreyi Güncelle</button>
+                    </form>
                 </div>
 
             </div>
@@ -149,6 +173,10 @@
             const loggedInEmail = localStorage.getItem('loggedInUserEmail');
             if (loggedInEmail) {
                 girisYap(loggedInEmail);
+                // URL'de #sifre varsa o sekmeyi aç
+                if(window.location.hash === '#sifre') {
+                    openTab('sifre');
+                }
             }
         };
 
@@ -167,7 +195,8 @@
                 users[email] = {
                     ad: 'Yeni Kullanıcı',
                     tel: '',
-                    siparisler: []
+                siparisler: [],
+                favoriler: []
                 };
                 localStorage.setItem('users', JSON.stringify(users));
             }
@@ -202,20 +231,8 @@
             }
 
             // Sepeti Profilde Göster
-            const profilSepetListesi = document.getElementById('profil-sepet-listesi');
-            const mevcutSepet = JSON.parse(localStorage.getItem('sepet')) || [];
-            profilSepetListesi.innerHTML = '';
-            if (mevcutSepet.length > 0) {
-                mevcutSepet.forEach(urun => {
-                    profilSepetListesi.innerHTML += `
-                        <div style="display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #eee;">
-                            <span>${urun.ad}</span>
-                            <strong>${urun.fiyat} TL</strong>
-                        </div>`;
-                });
-            } else {
-                profilSepetListesi.innerHTML = '<p>Sepetinizde ürün bulunmamaktadır.</p>';
-            }
+            renderSepet();
+            renderFavoriler();
 
             // Ekranı Değiştir
             document.getElementById('login-section').style.display = 'none';
@@ -258,6 +275,98 @@
                 alert('Bilgileriniz başarıyla güncellendi!');
             }
         });
+
+        // Şifre Değiştirme İşlemi
+        document.getElementById('password-change-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const currentPass = document.getElementById('current-password').value;
+            const newPass = document.getElementById('new-password').value;
+            const confirmPass = document.getElementById('confirm-password').value;
+
+            if (newPass !== confirmPass) {
+                alert('Yeni şifreler uyuşmuyor!');
+                return;
+            }
+
+            if (users[currentUserEmail].sifre !== currentPass) {
+                alert('Mevcut şifreniz yanlış!');
+                return;
+            }
+
+            users[currentUserEmail].sifre = newPass;
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Şifreniz başarıyla güncellendi!');
+            document.getElementById('password-change-form').reset();
+        });
+
+        // Sepeti Render Etme Fonksiyonu
+        function renderSepet() {
+            const profilSepetListesi = document.getElementById('profil-sepet-listesi');
+            const mevcutSepet = JSON.parse(localStorage.getItem('sepet')) || [];
+            profilSepetListesi.innerHTML = '';
+            
+            if (mevcutSepet.length > 0) {
+                mevcutSepet.forEach((urun, index) => {
+                    const imgSrc = urun.resim || 'https://via.placeholder.com/60';
+                    profilSepetListesi.innerHTML += `
+                        <div class="profil-sepet-item">
+                            <img src="${imgSrc}" alt="${urun.ad}" class="profil-sepet-img">
+                            <div class="profil-sepet-info">
+                                <h4>${urun.ad}</h4>
+                                <p>${urun.fiyat} TL</p>
+                            </div>
+                            <button class="profil-sepet-remove" onclick="profilUrunuSil(${index})" title="Sepetten Çıkar"><i class="fas fa-times"></i></button>
+                        </div>`;
+                });
+            } else {
+                profilSepetListesi.innerHTML = '<p>Sepetinizde ürün bulunmamaktadır.</p>';
+            }
+        }
+
+        // Favorileri Render Etme Fonksiyonu
+        function renderFavoriler() {
+            const div = document.getElementById('profil-favori-listesi');
+            if (!currentUserEmail || !users[currentUserEmail] || !users[currentUserEmail].favoriler || users[currentUserEmail].favoriler.length === 0) {
+                div.innerHTML = '<p>Henüz favorilere eklenmiş bir ürününüz yok.</p>';
+                return;
+            }
+            
+            div.innerHTML = '';
+            users[currentUserEmail].favoriler.forEach(urun => {
+                const imgSrc = urun.resim || 'https://via.placeholder.com/60';
+                div.innerHTML += `
+                    <div class="profil-sepet-item">
+                        <img src="${imgSrc}" alt="${urun.ad}" class="profil-sepet-img">
+                        <div class="profil-sepet-info">
+                            <h4>${urun.ad}</h4>
+                            <p>${urun.fiyat} TL</p>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        // Ürün Silme ve Favoriye Ekleme Mantığı
+        function profilUrunuSil(index) {
+            const mevcutSepet = JSON.parse(localStorage.getItem('sepet')) || [];
+            const urun = mevcutSepet[index];
+            
+            const favoriyeEkle = confirm("Ürünü sepetten çıkarmak üzeresiniz.\n\nÇıkarmadan önce favorilere eklemek ister misiniz?\n\nTamam: Evet, Favorilere Ekle\nİptal: Hayır, Sadece Sil");
+            
+            if (favoriyeEkle) {
+                if (!users[currentUserEmail].favoriler) users[currentUserEmail].favoriler = [];
+                // Aynı ürünün tekrar eklenmesini engelle
+                const varMi = users[currentUserEmail].favoriler.some(f => f.ad === urun.ad);
+                if (!varMi) {
+                    users[currentUserEmail].favoriler.push(urun);
+                    localStorage.setItem('users', JSON.stringify(users));
+                    renderFavoriler();
+                }
+            }
+            
+            mevcutSepet.splice(index, 1);
+            localStorage.setItem('sepet', JSON.stringify(mevcutSepet));
+            renderSepet();
+        }
     </script>
     <script src="script.js"></script>
 </body>

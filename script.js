@@ -44,11 +44,20 @@ function urunleriFiltrele(kategori) {
 // Sepete Ekleme
 document.querySelectorAll('.sepete-ekle').forEach(button => {
     button.addEventListener('click', () => {
-        const urunKarti = button.parentElement;
-        const ad = urunKarti.querySelector('h3').innerText;
-        const fiyat = parseInt(urunKarti.querySelector('p').innerText.replace(' TL', '').replace('.', ''));
+        let ad, fiyat, resim;
+        
+        if (button.id === 'modal-sepete-ekle-btn') {
+            ad = document.getElementById('modal-urun-ad').innerText;
+            fiyat = parseInt(document.getElementById('modal-urun-fiyat').innerText.replace(' TL', '').replace('.', ''));
+            resim = document.getElementById('modal-urun-resim').src;
+        } else {
+            const urunKarti = button.parentElement;
+            ad = urunKarti.querySelector('h3').innerText;
+            fiyat = parseInt(urunKarti.querySelector('p').innerText.replace(' TL', '').replace('.', ''));
+            resim = urunKarti.querySelector('img').src;
+        }
 
-        sepet.push({ ad, fiyat });
+        sepet.push({ ad, fiyat, resim });
         sepetiGuncelle();
         sepetPaneli.classList.add('acik');
     });
